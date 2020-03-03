@@ -10,5 +10,6 @@ SET(CMAKE_C_COMPILER mpicc)
 SET(CMAKE_CXX_COMPILER mpicxx)
 
 add_executable(various "mpi_testing_various_p2p_communication_methods.c")
+add_executable(delay "mpi_testing_communication_delay.c")
 
 target_link_libraries(various ${MPI_C_LIBRARIES})
