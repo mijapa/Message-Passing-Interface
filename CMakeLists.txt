@@ -9,4 +9,6 @@ include_directories(SYSTEM ${MPI_INCLUDE_PATH})
 SET(CMAKE_C_COMPILER mpicc)
 SET(CMAKE_CXX_COMPILER mpicxx)
 
-target_link_libraries(MPI_test_1 ${MPI_C_LIBRARIES})
+add_executable(various "mpi_testing_various_p2p_communication_methods.c")
+
+target_link_libraries(various ${MPI_C_LIBRARIES})
