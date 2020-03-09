@@ -8,7 +8,7 @@ MPI Standard Send Throughput Test Program
 
 #define PING_PONG_LIMIT (1000*1000)
 
-#define TAB_SIZE (10000)
+#define TAB_SIZE (1)
 
 int main(int argc, char **argv) {
     MPI_Init(NULL, NULL);
@@ -73,10 +73,10 @@ int main(int argc, char **argv) {
     if (world_rank == 0) {
         double time = MPI_Wtime() - start_time;
         printf("time = %gs\n", time);
-        double size = 1.0 * sizeof(int) * TAB_SIZE / 1024;
-        printf("message size = %gkB\n", size);
-        printf("hop time = %gus\n", time / PING_PONG_LIMIT * 1000 * 1000);
-        printf("throughput = %gMB/s\n", size / 1024 / (time / PING_PONG_LIMIT));
+        double size = 1.0 * sizeof(int) * TAB_SIZE;
+        printf("message size = %g B\n", size);
+        printf("hop time = %g us\n", time / PING_PONG_LIMIT * 1000 * 1000);
+        printf("throughput = %g Mb/s\n", size * 8 / (1024 * 1024) / (time / PING_PONG_LIMIT));
     }
 
     MPI_Finalize();
