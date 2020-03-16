@@ -16,5 +16,7 @@ add_executable(throughput "mpi_testing_standard_send_throughput.c")
 add_executable(buffered_throughput "mpi_testing_buffered_send_throughput.c")
 add_executable(scatter_gather "mpi_scatter_gather.c")
 add_executable(scatter_gather2 "mpi_testing_scatter_gather.c")
+add_executable(pi_sequential "mpi_pi_sequential.c")
 
+target_link_libraries(pi_sequential m)
 target_link_libraries(various ${MPI_C_LIBRARIES})
