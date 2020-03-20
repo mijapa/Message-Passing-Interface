@@ -34,9 +34,16 @@ int main(int argc, char **argv) {
     time_t tt;
     int seed = time(&tt);
     srand(seed);
-
-    n = 1000 * 1000 * 1000 / world_size;
     in_circle = 0;
+
+    if (argv[1]) {
+        n = strtoul(argv[1], NULL, 10);
+        n /= world_size;
+    } else {
+        printf("Wrong program argument");
+        exit(1);
+    }
+
     double start_time;
 
     MPI_Barrier(MPI_COMM_WORLD);
@@ -51,15 +58,25 @@ int main(int argc, char **argv) {
     }
 
     // Reduce all of the local sums into the global sum
-    long global_in_circle_sum;
+    unsigned long global_in_circle_sum;
     MPI_Reduce(&in_circle, &global_in_circle_sum, 1, MPI_UNSIGNED_LONG, MPI_SUM, 0,
                MPI_COMM_WORLD);
 
     if (world_rank == 0) {
         double time = MPI_Wtime() - start_time;
+
         printf("time = %gs\n", time);
         double pi = (double) 4.0 * global_in_circle_sum / (n * world_size);
-        printf("n = %u, pi = %f\n", n * world_size, pi);
+        printf("n = %lu, pi = %f\n", n * world_size, pi);
+
+        FILE *fp;
+        if ((fp = fopen("pi_reduce_times.csv", "a")) == NULL) {
+            printf("Can't open data.csv in append mode!\n");
+            exit(1);
+        }
+        fprintf(fp, "%i, %g, %g", world_size, time, pi);
+        fprintf(fp, "\n");
+        fclose(fp);
     }
 
     MPI_Finalize();
