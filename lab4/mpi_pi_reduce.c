@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
             printf("Can't open data.csv in append mode!\n");
             exit(1);
         }
-        fprintf(fp, "%lu, %i, %g, %g", n, world_size, time, pi);
+        fprintf(fp, "%lu, %i, %g, %g", n * world_size, world_size, time, pi);
         fprintf(fp, "\n");
         fclose(fp);
     }
