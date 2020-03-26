@@ -30,15 +30,17 @@ int main(int argc, char **argv) {
 
     double x, y;
     unsigned long in_circle, n;
+    char *file_name;
 
     time_t tt;
     int seed = time(&tt);
     srand(seed);
     in_circle = 0;
 
-    if (argv[1]) {
+    if (argv[1] && argv[2]) {
         n = strtoul(argv[1], NULL, 10);
         n /= world_size;
+        file_name = argv[2];
     } else {
         printf("Wrong program argument");
         exit(1);
@@ -70,11 +72,11 @@ int main(int argc, char **argv) {
         printf("n = %lu, pi = %f\n", n * world_size, pi);
 
         FILE *fp;
-        if ((fp = fopen("pi_reduce_times.csv", "a")) == NULL) {
+        if ((fp = fopen(file_name, "a")) == NULL) {
             printf("Can't open data.csv in append mode!\n");
             exit(1);
         }
-        fprintf(fp, "%i, %g, %g", world_size, time, pi);
+        fprintf(fp, "%lu, %i, %g, %g", n, world_size, time, pi);
         fprintf(fp, "\n");
         fclose(fp);
     }
