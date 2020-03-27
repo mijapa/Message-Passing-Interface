@@ -2,7 +2,7 @@
 #SBATCH --nodes 1
 #SBATCH --ntasks 12
 #SBATCH --exclusive
-#SBATCH --time=00:05:00
+#SBATCH --time=01:00:00
 #SBATCH --constraint="intel"
 #SBATCH --mem-per-cpu=100MB
 #SBATCH --partition=plgrid
@@ -14,7 +14,7 @@ module add plgrid/tools/openmpi
 mpicc -std=c11 -o mpi_pi_reduce mpi_pi_reduce.c
 
 echo "n,p,s,pi,m" > non_scalable.csv
-for m in 100 1000 10000; do
+for m in 10^7 10^8 10^9; do
   for ((i=1; i<=$1; i++)); do
     echo "$i"
     for ((j=1; j<=$3; j++)); do
@@ -24,7 +24,7 @@ for m in 100 1000 10000; do
 done
 
 echo "n,p,s,pi,m" > scalable.csv
-for m in 100 1000 10000; do
+for m in 10^7 10^8 10^9; do
   for ((i=1; i<=$1; i++)); do
     echo "$i"
     for ((j=1; j<=$3; j++)); do
