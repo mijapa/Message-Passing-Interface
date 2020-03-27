@@ -13,7 +13,7 @@
 module add plgrid/tools/openmpi
 mpicc -std=c11 -o mpi_pi_reduce mpi_pi_reduce.c
 
-echo "n,p,s,pi" > non_scalable.csv
+echo "n,p,s,pi,m" > non_scalable.csv
 for m in 100 1000 10000; do
   for ((i=1; i<=$1; i++)); do
     echo "$i"
@@ -23,7 +23,7 @@ for m in 100 1000 10000; do
   done
 done
 
-echo "n,p,s,pi" > scalable.csv
+echo "n,p,s,pi,m" > scalable.csv
 for m in 100 1000 10000; do
   for ((i=1; i<=$1; i++)); do
     echo "$i"
