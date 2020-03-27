@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
            processor_name, world_rank, world_size);
 
     double x, y;
-    unsigned long in_circle, n;
+    unsigned long in_circle, n, m;
     char *file_name;
 
     time_t tt;
@@ -37,10 +37,11 @@ int main(int argc, char **argv) {
     srand(seed);
     in_circle = 0;
 
-    if (argv[1] && argv[2]) {
+    if (argv[1] && argv[2] && argv[3]) {
         n = strtoul(argv[1], NULL, 10);
         n /= world_size;
         file_name = argv[2];
+        m = strtoul(argv[3], NULL, 10);
     } else {
         printf("Wrong program argument");
         exit(1);
@@ -76,7 +77,7 @@ int main(int argc, char **argv) {
             printf("Can't open data.csv in append mode!\n");
             exit(1);
         }
-        fprintf(fp, "%lu, %i, %g, %g", n * world_size, world_size, time, pi);
+        fprintf(fp, "%lu, %i, %g, %g, %lu", n * world_size, world_size, time, pi, m);
         fprintf(fp, "\n");
         fclose(fp);
     }
